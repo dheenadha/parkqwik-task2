@@ -1,8 +1,55 @@
 import React from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useRef, useState } from 'react';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Image, } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
+
+const slides = [
+  {
+    id: '1',
+    title: 'Recharge FASTag',
+    subtitle: 'Get exciting prizes',
+    buttonText: 'Recharge Now',
+    image: 'https://your-image-url.com/fastag.png', // Replace with actual image URL
+  },
+  {
+    id: '2',
+    title: 'Save on Fuel',
+    subtitle: 'Exclusive discounts on petrol & diesel',
+    buttonText: 'Claim Now',
+    image: 'https://your-image-url.com/fuel.png',
+  },
+  {
+    id: '3',
+    title: 'Toll Cashback',
+    subtitle: 'Get cashback on every toll payment',
+    buttonText: 'Get Cashback',
+    image: 'https://your-image-url.com/cashback.png',
+  },
+];
+const SlideItem = ({ item }) => (
+  <View style={styles.slide}>
+    <Text style={styles.title}>{item.title}</Text>
+    <Text style={styles.subtitle}>{item.subtitle}</Text>
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>{item.buttonText}</Text>
+    </TouchableOpacity>
+    <Image source={{ uri: item.image }} style={styles.image} />
+  </View>
+);
+
+
+
+
 const App = () => {
+  const flatListRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleScroll = (event) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentIndex(index);
+  };
   return (
     <ScrollView style={styles.container}>
       
@@ -39,6 +86,7 @@ const App = () => {
             </TouchableOpacity>
           ))}
         </View>
+
       </View>
 
       {/* FASTag Recharge Section */}
@@ -83,6 +131,7 @@ const App = () => {
           </TouchableOpacity>
         </View>
       </View>
+      
 
       {/* Premium Plans */}
       <View style={styles.section}>
@@ -95,6 +144,7 @@ const App = () => {
             <Text style={styles.dealText}>Elite Car Wash</Text>
           </TouchableOpacity>
         </View>
+
       </View>
 
     </ScrollView>
@@ -102,6 +152,64 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  slide: {
+    width:15,
+    backgroundColor: '#4CAF50',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#fff',
+    marginVertical: 5,
+  },
+  button: {
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#4CAF50',
+    fontWeight: 'bold',
+  },
+  image: {
+    width: 100,
+    height: 80,
+    marginTop: 10,
+  },
+  pagination: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#ccc',
+    marginHorizontal: 5,
+  },
+  activeDot: {
+    backgroundColor: '#fff',
+    width: 12,
+    height: 12,
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',
@@ -167,7 +275,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 9,
     backgroundColor: '#E8E8E8',
     borderRadius: 5,
     alignItems: 'center',
@@ -208,6 +316,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  
 });
 
 export default App;
